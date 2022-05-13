@@ -1,4 +1,4 @@
-# HDU - lab 1 - variant 8
+# HDU - lab 2 - variant 8
 
 ## Variant 8
 
@@ -6,34 +6,30 @@ Dictionary based on hash-map, open address
 
 ## laboratory work description
 
-• Add a new element  (lst.add(3))
-• Set an element with specific index / key (lst.set(1, 3)) if applicable.
-• Remove an element by (lst.remove(3)):
-
-- index for lists
-- key for dictionaries - value for sets value
-
-• Access:
-
-- size (lst.size())
-- is member (lst.member(3))
-- reverse (lst.reverse() (if applicable)
-
-• Conversion from/to built-in list :
-
-- from_list (lst.from_list([12, 99, 37]))
-- to_list (lst.to_list())
-
-• Filter data structure by specific predicate (lst.filter(is_even))
-• Map1 structure by specific function (lst.map(increment))
-• Reduce2 – process structure elements to build a return value by specific functions(lst.reduce(sum))
-• Data structure should be an iterator3 in Python style
-• Data structure should be a monoid and implement empty and concat methods
+| Description                                               | Function style API           |
+|-----------------------------------------------------------|------------------------------|
+| Add a new element                                         | x = cons(lst, 3)             |
+| Remove an element by value                                | x = remove(lst, 3)           |
+| Size                                                      | n = length(lst)              |
+| Is member                                                 | b = member(lst, v)           |
+| Reverse(for ordered)                                      | x = reverse(lst)             |
+| Intersection(for sets)                                    | b = intersection(lst1, lst2) |
+| To built-in list                                          | l = to_list(lst)             |
+| From built-in list                                        | x = from_list([12])          |
+| Find element by specific predicate                        | v = find(lst, is_even)       |
+| Filter data structure by specific predicate               | x = filter(lst, is_even)     |
+| Map structure by specific function                        | x = map(lst,increment)       |
+| Reduce process elements and build a value by the function | v = reduce(lst, sum)         |
+| Function style iterator(see in the example ahead)         | i = iterator(lst)            |
+| Data structure should be a monoid and implement `empty`   | x = empty()                  |
+| Data structure should be a monoid and implement `concat`  | x = concat(lst1, lst2)       |
+| Check equality method                                     | \__eq\__                     |
+| String serialization method                               | \__str\__                    |
 
 ## Project structure
 
-- `Hashmap_mutable.py` -- implementation of `Dictionary` class with `add` etc.
-- `test_mutable.py` -- unit and PBT tests for `Dictionary`.
+- `HMOpenAddressDict.py` -- implementation of `Dictionary` class with `add` etc.
+- `HMOpenAddressDict_test.py` -- unit and PBT tests for `Dictionary`.
 
 ## Features
 
@@ -63,7 +59,7 @@ Dictionary based on hash-map, open address
 
 ## Contribution
 
-- Li ChangMinChen (212320023@hdu.edu.cn) -- Hashmap_mutable.py
+- Li ChangMinChen (212320023@hdu.edu.cn) -- HMOpenAddressDict.py and HMOpenAddressDict_test.py 
 - Li Xiao (212320022@hdu.edu.cn) -- README.md
 
 ## Changelog
@@ -73,6 +69,6 @@ Dictionary based on hash-map, open address
 
 ## Design notes
 
-- Create `Myentry` class to implement key-value pairs.
-- Create `MyIter` class to implement `__iter__` and `__next__`.
-- Create `MyDictionary` class to implement the dictionary.
+- Create `Entry` class to implement key-value pairs.
+- Create `Next` class to implement `__iter__` and `__next__`.
+- Create `HMOpenAddressDict` class to implement the dictionary.
