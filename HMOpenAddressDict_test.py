@@ -102,7 +102,7 @@ class TestHMOpenAddressDict(unittest.TestCase):
         empty = mempty()
         self.assertEqual(to_list(empty), [])
         self.assertEqual(to_list(cons("a", 1, empty)), [("a", 1)])
-        self.assertEqual(to_list(cons(2, "b",cons("a", 1, empty))),
+        self.assertEqual(to_list(cons(2, "b", cons("a", 1, empty))),
                          [("a", 1), (2, "b")])
 
     def test_from_list(self):
