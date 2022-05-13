@@ -12,8 +12,12 @@ class TestHMOpenAddressDict(unittest.TestCase):
         l2 = cons("a", 1, cons(None, "c", cons(2, "b", empty)))
         self.assertEqual(str(empty), "{}")
         self.assertTrue(
-            str(l1) in ["{'a':1,2:'b',None:'c'}", "{'a':1,None:'c',2:'b'}", "{2:'b','a':1,None:'c'}",
-                        "{2: 'b', None: 'c', 'a': 1}", "{None: 'c', 2: 'b', 'a': 1}", "{None: 'c', 'a': 1, 2: 'b'}"
+            str(l1) in ["{'a':1,2:'b',None:'c'}",
+                        "{'a':1,None:'c',2:'b'}",
+                        "{2:'b','a':1,None:'c'}",
+                        "{2: 'b', None: 'c', 'a': 1}",
+                        "{None: 'c', 2: 'b', 'a': 1}",
+                        "{None: 'c', 'a': 1, 2: 'b'}"
                         ])
         self.assertNotEqual(empty, l1)
         self.assertNotEqual(empty, l2)
@@ -21,8 +25,10 @@ class TestHMOpenAddressDict(unittest.TestCase):
         self.assertEqual(length(empty), 0)
         self.assertEqual(length(l1), 3)
         self.assertEqual(length(l2), 3)
-        self.assertTrue(str(remove(l1, None)) in ["{2:'b','a':1}", "{'a':1,2:'b'}"])
-        self.assertTrue(str(remove(l1, 'a')) in ["{2:'b',None:'c'}", "{None:'c',2:'b'}"])
+        self.assertTrue(str(remove(l1, None)) in
+                        ["{2:'b','a':1}", "{'a':1,2:'b'}"])
+        self.assertTrue(str(remove(l1, 'a')) in
+                        ["{2:'b',None:'c'}", "{None:'c',2:'b'}"])
         self.assertFalse(member(None, empty))
         self.assertTrue(member(None, l1))
         self.assertTrue(member('a', l1))
@@ -36,8 +42,10 @@ class TestHMOpenAddressDict(unittest.TestCase):
         buf = []
         for e in l1:
             buf.append(e)
-        self.assertEqual(filter(l1, lambda e1: e1 is None), cons(None, "c", empty))
-        self.assertEqual(map(l1, lambda x: (x[0], str(x[1]) + "a")),
+        self.assertEqual(filter(l1, lambda e1: e1 is None),
+                         cons(None, "c", empty))
+        self.assertEqual(
+            map(l1, lambda x:(x[0], str(x[1]) + "a")),
                          cons(None, "ca", cons(2, "ba", cons("a", "1a", empty))))
         l3 = cons(None, 1, cons(2, 2, cons("a", 3, empty)))
         self.assertEqual(reduce(l3, lambda x, y: x + y), 6)
@@ -47,7 +55,8 @@ class TestHMOpenAddressDict(unittest.TestCase):
         empty = mempty()
         self.assertEqual(length(mempty()), 0)
         self.assertEqual(length(cons("a", 1, empty)), 1)
-        self.assertEqual(length(cons("a", 1, cons(None, "c", cons(2, "b", empty)))), 3)
+        self.assertEqual(length(cons("a", 1,
+                                     cons(None, "c", cons(2, "b", empty)))), 3)
 
     def test_cons(self):
         empty = mempty()
@@ -79,18 +88,22 @@ class TestHMOpenAddressDict(unittest.TestCase):
         l1 = cons(None, "c", cons(2, "b", cons("a", 1, empty)))
         l2 = cons("a", 1, cons(None, "c", cons(2, "b", empty)))
         self.assertEqual(mconcat(empty, empty), empty)
-        self.assertEqual(mconcat(cons("a", 1, empty), empty), cons("a", 1, empty))
-        self.assertEqual(mconcat(empty, cons("a", 1, empty)), cons("a", 1, empty))
+        self.assertEqual(mconcat(cons("a", 1, empty), empty),
+                         cons("a", 1, empty))
+        self.assertEqual(mconcat(empty, cons("a", 1, empty)),
+                         cons("a", 1, empty))
         self.assertEqual(mconcat(l1, l2), from_list(
             [(2, 'B'), ('a', 1), (2, 'b'), (None, 'c')]))
-        self.assertEqual(mconcat(mconcat(l1, l2), cons(90, 89, empty)), from_list(
-            [(2, 'B'), ('a', 1), (2, 'b'), (None, 'c'), (90, 89)]))
+        self.assertEqual(mconcat(mconcat(l1, l2), cons(90, 89, empty)),
+                         from_list([(2, 'B'), ('a', 1), (2, 'b'),
+                                    (None, 'c'), (90, 89)]))
 
     def test_to_list(self):
         empty = mempty()
         self.assertEqual(to_list(empty), [])
         self.assertEqual(to_list(cons("a", 1, empty)), [("a", 1)])
-        self.assertEqual(to_list(cons(2, "b", cons("a", 1, empty))), [("a", 1), (2, "b")])
+        self.assertEqual(to_list(cons(2, "b",
+                                      cons("a", 1, empty))), [("a", 1), (2, "b")])
 
     def test_from_list(self):
         test_data = [
@@ -103,7 +116,8 @@ class TestHMOpenAddressDict(unittest.TestCase):
 
     @given(st.dictionaries(st.integers(), st.integers()))
     def test_from_list_to_list_equality(self, a):
-        # first convert the dict to list[tuple] ,it is order removing duplicate keys
+        # first convert the dict to list[tuple],
+        # it is order removing duplicate keys
         test = exchangeDic2Tuples(a)
         self.assertEqual(to_list(from_list(test)), test)
 
@@ -112,7 +126,8 @@ class TestHMOpenAddressDict(unittest.TestCase):
            c=st.dictionaries(st.integers(), st.integers()))
     def test_monoid_identity(self, a, b, c):
         empty = mempty()
-        # first convert the dict to list[tuple] ,it is order removing duplicate keys
+        # first convert the dict to list[tuple],
+        # it is order removing duplicate keys
         # (a+b)+c=a+(b+c)
         md_a = from_list(exchangeDic2Tuples(a))
         md_b = from_list(exchangeDic2Tuples(b))
@@ -151,12 +166,14 @@ class TestHMOpenAddressDict(unittest.TestCase):
 
     def test_filter(self):
         l1 = cons(None, "c", cons(2, "b", cons("a", 1, mempty())))
-        self.assertEqual(filter(l1, lambda e1: e1 is None), cons(None, "c", mempty()))
+        self.assertEqual(filter(l1, lambda e1: e1 is None),
+                         cons(None, "c", mempty()))
 
     def test_map(self):
         l1 = cons(None, "c", cons(2, "b", cons("a", 1, mempty())))
         self.assertEqual(map(l1, lambda x: (x[0], str(x[1]) + "a")),
-                         cons(None, "ca", cons(2, "ba", cons("a", "1a", mempty()))))
+                         cons(None, "ca", cons(2, "ba",
+                                               cons("a", "1a", mempty()))))
 
     def test_reduce(self):
         l3 = cons(None, 1, cons(2, 2, cons("a", 3, mempty())))
