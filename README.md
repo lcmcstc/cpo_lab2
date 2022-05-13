@@ -23,8 +23,8 @@ Dictionary based on hash-map, open address
 | Function style iterator(see in the example ahead)         | i = iterator(lst)            |
 | Data structure should be a monoid and implement `empty`   | x = empty()                  |
 | Data structure should be a monoid and implement `concat`  | x = concat(lst1, lst2)       |
-| Check equality method                                     | \__eq\__                     |
-| String serialization method                               | \__str\__                    |
+| Check equality method                                     | \_\_eq\_\_                   |
+| String serialization method                               | \_\_str\_\_                  |
 
 ## Project structure
 
@@ -33,7 +33,9 @@ Dictionary based on hash-map, open address
 
 ## Features
 
-- `to_list( )`
+- `__str__()`
+- `__eq__(other)`
+- `to_list()`
 - `from_list(tlist)`
 - `compute_index(key)`
 - `delete_que_by_key(key)`
@@ -41,21 +43,33 @@ Dictionary based on hash-map, open address
 - `add(key, value)`
 - `set(key, value)`
 - `get(key)`
+- `print()`
 - `remove(key)`
-- `size( )`
-- `_contains_(item)`
+- `size()`
 - `contains_value(item)`
 - `contain_key(item)`
 - `filter(p)`
 - `map(p)`
 - `reduce(p)`
-- `empty( )`
-- `concat(other)`
-- `reverse()`
-- `__next__( )`
-- `__iter__( )`
-- PBT: `test_from_list_to_list_equality(a)`
-- PBT: `test_python_len_and_list_size_equality(a)`
+- `__iter()__`
+- `cons(key, value, m)`
+- `remove(m, key)`
+- `length(m)`
+- `member(key, m)`
+- `reverse(li)`
+- `to_list(m)`
+- `from_list(m)`
+- `find(li, key)`
+- `filter(li, f)`
+- `map(li,p)`
+- `iterator(li)`
+- `mempty()`
+- `mconcat(m, o)`
+- `exchangeDic2Tuples(d)`
+- 
+- PBT:`test_from_list_to_list_equality(self, a)`
+- PBT:`test_monoid_identity(self, a, b, c)`
+- PBT:`test_python_len_and_list_size_equality(self, a)`
 
 ## Contribution
 
@@ -66,6 +80,8 @@ Dictionary based on hash-map, open address
 
 - 13.05.2022 - 0
   - Initial commit
+- 13.05.2022 - 1
+  - Update README.md
 
 ## Design notes
 
