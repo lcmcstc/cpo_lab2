@@ -1,4 +1,4 @@
-# HDU - lab 2 - variant 8
+# HDU - lab2 - variant8
 
 ## Variant 8
 
@@ -6,25 +6,25 @@ Dictionary based on hash-map, open address
 
 ## laboratory work description
 
-| Description                                                     | Function style API           |
-|-----------------------------------------------------------------|------------------------------|
-| Add a new element                                               | x = cons(lst, 3)             |
-| Remove an element by value                                      | x = remove(lst, 3)           |
-| Size                                                            | n = length(lst)              |
-| Is member                                                       | b = member(lst, v)           |
-| Reverse(for ordered)                                            | x = reverse(lst)             |
-| Intersection(for sets)                                          | b = intersection(lst1, lst2) |
-| To built-in list                                                | l = to_list(lst)             |
-| From built-in list                                              | x = from_list([12])          |
-| Find element by specific predicate                              | v = find(lst, is_even)       |
-| Filter data structure by specific predicate                     | x = filter(lst, is_even)     |
-| Map structure by specific function                              | x = map(lst,increment)       |
-| Reduce process elements and <br/>build a value by the function  | v = reduce(lst, sum)         |
-| Function style iterator<br/>(see in the example ahead)          | i = iterator(lst)            |
-| Data structure should be<br/>a monoid and implement `empty`     | x = empty()                  |
-| Data structure should be<br/>a monoid and implement `concat`    | x = concat(lst1, lst2)       |
-| Check equality method                                           | \_\_eq\_\_                   |
-| String serialization method                                     | \_\_str\_\_                  |
+| Description                                 | Function style API           |
+|---------------------------------------------|------------------------------|
+| Add a new element                           | x = cons(lst, 3)             |
+| Remove an element by value                  | x = remove(lst, 3)           |
+| Size                                        | n = length(lst)              |
+| Is member                                   | b = member(lst, v)           |
+| Reverse(for ordered)                        | x = reverse(lst)             |
+| Intersection(for sets)                      | b = intersection(lst1, lst2) |
+| To built-in list                            | l = to_list(lst)             |
+| From built-in list                          | x = from_list([12])          |
+| Find element by specific predicate          | v = find(lst, is_even)       |
+| Filter data structure by specific predicate | x = filter(lst, is_even)     |
+| Map structure by specific function          | x = map(lst,increment)       |
+| Reduce                                      | v = reduce(lst, sum)         |
+| Function style iterator                     | i = iterator(lst)            |
+| a monoid and implement `empty`              | x = empty()                  |
+| a monoid and implement `concat`             | x = concat(lst1, lst2)       |
+| Check equality method                       | \_\_eq\_\_                   |
+| String serialization method                 | \_\_str\_\_                  |
 
 ## Project structure
 

@@ -45,8 +45,8 @@ class TestHMOpenAddressDict(unittest.TestCase):
         self.assertEqual(filter(l1, lambda e1: e1 is None),
                          cons(None, "c", empty))
         self.assertEqual(
-            map(l1, lambda x:(x[0], str(x[1]) + "a")),
-                         cons(None, "ca", cons(2, "ba", cons("a", "1a", empty))))
+            map(l1, lambda x: (x[0], str(x[1]) + "a")),
+            cons(None, "ca", cons(2, "ba", cons("a", "1a", empty))))
         l3 = cons(None, 1, cons(2, 2, cons("a", 3, empty)))
         self.assertEqual(reduce(l3, lambda x, y: x + y), 6)
         self.assertEqual(empty, mempty())
@@ -103,7 +103,7 @@ class TestHMOpenAddressDict(unittest.TestCase):
         self.assertEqual(to_list(empty), [])
         self.assertEqual(to_list(cons("a", 1, empty)), [("a", 1)])
         self.assertEqual(to_list(cons(2, "b",
-                                      cons("a", 1, empty))), [("a", 1), (2, "b")])
+                        cons("a", 1, empty))), [("a", 1), (2, "b")])
 
     def test_from_list(self):
         test_data = [
