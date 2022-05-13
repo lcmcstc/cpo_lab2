@@ -79,9 +79,9 @@ Dictionary based on hash-map, open address
 ## Changelog
 
 - 13.05.2022 - 0
-    - Initial commit
+  - Initial commit
 - 13.05.2022 - 1
-    - Update README.md
+  - Update README.md
 
 ## Design notes
 
