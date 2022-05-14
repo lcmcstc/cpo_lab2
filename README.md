@@ -45,7 +45,7 @@ Dictionary based on hash-map, open address
 - `from_list(m)`
 - `find(li, key)`
 - `filter(li, f)`
-- `map(li,p)`
+- `mmap(li,p)`
 - `iterator(li)`
 - `mempty()`
 - `mconcat(m, o)`
