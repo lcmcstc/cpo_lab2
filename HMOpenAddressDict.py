@@ -5,24 +5,6 @@ import threading
 from threading import Lock
 
 
-class Entry:
-
-    def __init__(self, key, value):
-        self.key = key
-        self.value = value
-
-    def __str__(self):
-        return "{" + str(self.key) + ":" + str(self.value) + "}"
-
-    def __eq__(self, other):
-        a = self.key == other.key
-        b = self.value == other.value
-        if a & b:
-            return True
-        else:
-            return False
-
-
 class Next:
     def __init__(self, myDictionary):
         self.data = myDictionary
@@ -33,15 +15,17 @@ class Next:
         return self
 
     def __next__(self):
-        entry = [i for i in range(2)]
         x = self.index
         self.index += 1
         if self.data.top < x:
             raise StopIteration
-        if self.data.que[x] is None:
+        a = self.data.que[x]
+        if a is None:
             return None
-        entry[0] = self.data.que[x]
-        entry[1] = self.data.get(self.data.que[x])
+        b = self.data.get(self.data.que[x])
+        if a == self.data.none_default:
+            a = None
+        entry = (a, b)
         return entry
 
 
@@ -66,18 +50,15 @@ class HMOpenAddressDict:
         ret = "{"
         for item in self:
             a = str(item[0])
-            if a == self.none_default:
-                a = "None"
-            else:
+            if a != "None":
                 if not str.isdigit(a):
                     a = "'" + a + "'"
 
             b = str(item[1])
-            if b == self.none_default:
-                b = "None"
-            else:
+            if b != "None":
                 if not str.isdigit(b):
                     b = "'" + b + "'"
+
             ret = ret + a + ":" + b + ","
         ret = ret.strip(',') + "}"
         return ret
@@ -288,8 +269,8 @@ def cons(key, value, m):
 
 def remove(m, key):
     ret = HMOpenAddressDict(length(m))
-    if key is None:
-        key = m.none_default
+    # if key is None:
+    #     key = m.none_default
     for item in m:
         if item[0] != key:
             ret.add(item[0], item[1])
@@ -369,7 +350,7 @@ def filter(li, f):
     return ret
 
 
-def map(li, p):
+def mmap(li, p):
     ret = HMOpenAddressDict(li.dic_size)
     for i in li:
         a = p(i)

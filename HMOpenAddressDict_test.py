@@ -1,3 +1,4 @@
+import itertools
 import unittest
 from hypothesis import given
 import hypothesis.strategies as st
@@ -34,18 +35,23 @@ class TestHMOpenAddressDict(unittest.TestCase):
         self.assertTrue(member('a', l1))
         self.assertTrue(member(2, l1))
         self.assertFalse(member(3, l1))
+        self.assertIn(to_list(l1), map(
+            list, itertools.permutations([('a', 1), (2, 'b'), (None, 'c')])))
         self.assertEqual(l1, from_list([('a', 1), (2, 'b'), (None, 'c')]))
         self.assertEqual(l1, from_list(
             [(2, 'B'), ('a', 1), (2, 'b'), (None, 'c')]))
         self.assertEqual(mconcat(l1, l2), from_list(
             [(2, 'B'), ('a', 1), (2, 'b'), (None, 'c')]))
+
         buf = []
         for e in l1:
-            buf.append(e)
+            buf.append(e[0])
+        self.assertIn(buf, map(list, itertools.permutations(['a', 2, None])))
+
         self.assertEqual(filter(l1, lambda e1: e1 is None),
                          cons(None, "c", empty))
         self.assertEqual(
-            map(l1, lambda x: (x[0], str(x[1]) + "a")),
+            mmap(l1, lambda x: (x[0], str(x[1]) + "a")),
             cons(None, "ca", cons(2, "ba", cons("a", "1a", empty))))
         l3 = cons(None, 1, cons(2, 2, cons("a", 3, empty)))
         self.assertEqual(reduce(l3, lambda x, y: x + y), 6)
@@ -171,7 +177,7 @@ class TestHMOpenAddressDict(unittest.TestCase):
 
     def test_map(self):
         l1 = cons(None, "c", cons(2, "b", cons("a", 1, mempty())))
-        self.assertEqual(map(l1, lambda x: (x[0], str(x[1]) + "a")),
+        self.assertEqual(mmap(l1, lambda x: (x[0], str(x[1]) + "a")),
                          cons(None, "ca", cons(2, "ba",
                                                cons("a", "1a", mempty()))))
 
