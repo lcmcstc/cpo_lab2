@@ -158,15 +158,12 @@ class TestHMOpenAddressDict(unittest.TestCase):
         myd = from_list(tlist)
         tmp = []
         for e in myd:
-            t = (e[0], e[1])
-            tmp.append(t)
+            tmp.append(e)
         self.assertEqual(tlist, tmp)
         self.assertEqual(to_list(myd), tmp)
 
     def test_find(self):
-        md = HMOpenAddressDict(2)
-        md.add(None, 1)
-        md.add(2, None)
+        md = cons(2, None, cons(None, 1, mempty()))
         self.assertEqual(1, find(md, None))
         self.assertEqual(None, find(md, 2))
 

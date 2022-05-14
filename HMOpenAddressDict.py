@@ -11,7 +11,6 @@ class Next:
         self.index = 0
 
     def __iter__(self):
-        self.a = 0
         return self
 
     def __next__(self):
@@ -78,20 +77,8 @@ class HMOpenAddressDict:
                     return False
         return True
 
-    def to_list(self):
-        ret = {}
-        for i in range(len(self.que)):
-            if self.que[i] is None:
-                break
-            # entry = MyEntry(self.que[i], self.get(self.que[i]))
-            ret[self.que[i]] = self.get(self.que[i])
-        return ret
-
-    def from_list(self, tlist):
-        self.__init__(len(tlist))
-        for entry in tlist.items():
-            self.add(entry[0], entry[1])
-        return self
+    def __iter__(self):
+        return Next(self)
 
     # model hash(modular arithmetic) :: f( key ) = key mod p ( p ≤ m )
     def compute_index(self, key):
@@ -192,40 +179,6 @@ class HMOpenAddressDict:
         else:
             return None
 
-    def print(self):
-        for i in self.que:
-            print(str(i) + ":" + str(self.get(i)))
-
-    def remove(self, key):
-        if key is None:
-            key = self.none_default
-        index = self.find(key)
-        if index > -1:
-            self.keys[index] = None
-            ret = self.store[index]
-            self.store[index] = None
-            self.delete_que_by_key(key)
-            return ret
-        else:
-            return False
-
-    def size(self):
-        return self.dic_size
-
-    def member(self, item):
-        a = self.contains_key(item[0])
-        b = self.contains_value(item[1])
-        if a & b:
-            return True
-        else:
-            return False
-
-    def contains_value(self, item):
-        for i in self.store:
-            if i == item:
-                return True
-        return False
-
     def contains_key(self, item):
         if item is None:
             item = self.none_default
@@ -233,30 +186,6 @@ class HMOpenAddressDict:
             if i == item:
                 return True
         return False
-
-    def filter(self, p):
-        for i in range(len(self.que)):
-            if self.que[i] is None:
-                break
-            if not p(self.que[i]):
-                self.remove(self.que[i])
-                self.filter(p)
-
-    def map(self, p):
-        for i in range(len(self.store)):
-            if self.store[i] is not None:
-                self.store[i] = p(self.store[i])
-
-    def reduce(self, p):
-        ret = 0
-        for i in range(len(self.store)):
-            if self.store[i] is not None:
-                ret = p(ret, self.store[i])
-        return ret
-
-    def __iter__(self):
-        self.a = 0
-        return Next(self)
 
 
 def cons(key, value, m):
@@ -269,8 +198,6 @@ def cons(key, value, m):
 
 def remove(m, key):
     ret = HMOpenAddressDict(length(m))
-    # if key is None:
-    #     key = m.none_default
     for item in m:
         if item[0] != key:
             ret.add(item[0], item[1])
@@ -278,7 +205,7 @@ def remove(m, key):
 
 
 def length(m):
-    return m.size()
+    return m.dic_size
 
 
 def member(key, m):
@@ -293,22 +220,10 @@ def reverse(li):
 
 
 def to_list(m):
-    ret = {}
-    for i in range(len(m.que)):
-        if m.que[i] is None:
-            break
-        ret[m.que[i]] = m.get(m.que[i])
-    ret2 = []
-    for item in ret.items():
-        a = item[0]
-        b = item[1]
-        if a == m.none_default:
-            a = None
-        if b == m.none_default:
-            b = None
-        t = (a, b)
-        ret2.append(t)
-    return ret2
+    ret = []
+    for i in m:
+        ret.append(i)
+    return ret
 
 
 def from_list(li):
@@ -367,7 +282,6 @@ def reduce(self, p):
 
 
 def iterator(li):
-    li.a = 0
     return Next(li)
 
 
